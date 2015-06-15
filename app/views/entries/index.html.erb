@@ -1,0 +1,12 @@
+<% provide(:title, 'All Post') %>
+<h1>All Post</h1>
+
+<%= will_paginate %>
+
+<ul class="users">
+  <% @entries.each do |entry| %>
+    <%= render entry %>
+  <% end %>
+</ul>
+
+<%= will_paginate %>

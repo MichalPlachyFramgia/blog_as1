@@ -1,0 +1,34 @@
+<% provide(:title, @entry.title) %>
+<div class="row">
+  <aside class="col-md-9">
+    <section>
+      <h1>
+        <%= @entry.title %>
+        <hr>
+        <%= @entry.user.name %>
+      </h1>
+    </section>
+    <hr>
+    <section class="stats">
+      <%= @entry.content %>
+    </section>
+  </aside>
+  <div class="col-md-8">
+    <% if @entry.comments.any? %>
+      <h3>Entries (<%= @entry.comments.count %>)</h3>
+      <ol class="comments">
+        <%= render @comments %>
+      </ol>
+      <%= will_paginate @comments %>
+    <% end %>
+  </div>
+
+</div>
+<% if logged_in? %>
+  <div class="row">
+    <aside class="col-md-4">
+      <section class="entry_form">
+        <%= render 'shared/comment_form' %>
+      </section>
+    </aside>
+<% end %>
