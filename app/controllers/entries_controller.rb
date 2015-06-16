@@ -1,10 +1,18 @@
 class EntriesController < ApplicationController
   before_action :logged_in_user, only: [:create, :destroy]
   before_action :correct_user,   only: :destroy
-  def show
-    @comment = current_user.comments.build
-    @entry = Entry.find(params[:id])
+  
+  def index
+    @entries = Entry.paginate(page: params[:page])
   end
+  def show
+    if (logged_in? && current_user)
+      @comment = current_user.comments.build
+    end
+    @entry = Entry.find(params[:id])
+    @comments = @entry.comments.paginate(page: params[:page])
+  end
+
   def create
     @entry = current_user.entries.build(entry_params)
     if @entry.save
@@ -16,7 +24,7 @@ class EntriesController < ApplicationController
     end
   end
 
-def destroy
+  def destroy
     @entry.destroy
     flash[:success] = "Entry deleted"
     redirect_to request.referrer || root_url
@@ -28,7 +36,7 @@ def destroy
       params.require(:entry).permit(:title, :content, :picture)
     end
 
-     def correct_user
+    def correct_user
       @entry = current_user.entries.find_by(id: params[:id])
       redirect_to root_url if @entry.nil?
     end

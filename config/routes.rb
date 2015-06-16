@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  root                'static_pages#home'
-  get    'help'    => 'static_pages#help'
+  root                'entries#index'
+  get    'post'    => 'static_pages#home'
   get    'about'   => 'static_pages#about'
   get    'contact' => 'static_pages#contact'
   get    'signup'  => 'users#new'
@@ -14,6 +14,11 @@ Rails.application.routes.draw do
   end
   resources :account_activations, only: [:edit]
   resources :password_resets,     only: [:new, :create, :edit, :update]
-  resources :entries
+  resources :entries do 
+    resources :comments
+    end
+
+
+  resources :comments
   resources :relationships,       only: [:create, :destroy]
 end

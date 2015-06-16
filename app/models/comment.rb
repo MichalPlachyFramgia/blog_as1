@@ -4,6 +4,7 @@ class Comment < ActiveRecord::Base
   default_scope -> { order(created_at: :desc) }
   mount_uploader :picture, PictureUploader
   validates :user_id, presence: true
+  validates :entry_id, presence: true
   validates :content, presence: true
   validate  :picture_size
 

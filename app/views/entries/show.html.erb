@@ -10,13 +10,15 @@
     </section>
     <hr>
     <section class="stats">
+      <%= image_tag @entry.picture.url if @entry.picture? %>
+      <hr>
       <%= @entry.content %>
     </section>
   </aside>
   <div class="col-md-8">
     <% if @entry.comments.any? %>
-      <h3>Entries (<%= @entry.comments.count %>)</h3>
-      <ol class="comments">
+      <p>Comments (<%= @entry.comments.count %>)</p>
+      <ol class="entries">
         <%= render @comments %>
       </ol>
       <%= will_paginate @comments %>
@@ -27,7 +29,7 @@
 <% if logged_in? %>
   <div class="row">
     <aside class="col-md-4">
-      <section class="entry_form">
+      <section class="comment_form">
         <%= render 'shared/comment_form' %>
       </section>
     </aside>
