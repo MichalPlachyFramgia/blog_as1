@@ -77,11 +77,15 @@ class User < ActiveRecord::Base
   def password_reset_expired?
     reset_sent_at < 2.hours.ago
   end
+
+  def feed
+    Micropost.where("user_id = ?", id)
+  end
   
   def feed
     following_ids = "SELECT followed_id FROM relationships
                      WHERE  follower_id = :user_id"
-    Entry.where("user_id IN (#{following_ids})
+    Micropost.where("user_id IN (#{following_ids})
                      OR user_id = :user_id", user_id: id)
   end
   # Follows a user.
