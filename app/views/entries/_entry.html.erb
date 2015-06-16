@@ -8,7 +8,7 @@
     <%= image_tag entry.picture.url if entry.picture? %>
   </span>
   <span class="timestamp"> |
-    Posted <%= time_ago_in_words(entry.created_at) %> ago.
+    Posted in  <%= entry.created_at.day %>/<%= entry.created_at.month %>/<%= entry.created_at.year %>
     <% if current_user?(entry.user) %>
       <%= link_to "delete", entry, method: :delete,
                                        data: { confirm: "You sure?" } %>
